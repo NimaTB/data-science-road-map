@@ -1,6 +1,8 @@
 -- SELECT FRMO LIMIT WHERE
 /*
 
+.mode column
+.headers on
 .shell cls -- clear the SQLlite
 
 = equal
@@ -42,3 +44,53 @@ SELECT * FROM countries WHERE country_name LIKE '%M%';
 SELECT * FROM countries WHERE country_name LIKE '_e%';
 
 SELECT * FROM countries WHERE country_name LIKE '_n%';
+
+/*
+AND OR NOT EXISTS (subqueries T/F if any rows exist)
+IS NULL, IS NOT NULL
+*/
+SELECT * FROM countries 
+	WHERE country_name LIKE '_r%'
+	AND region_id = 2;
+
+SELECT * FROM countries 
+	WHERE country_name LIKE '_r%'
+	OR region_id = 2;
+
+SELECT * FROM countries 
+	WHERE country_name NOT LIKE '_r%'
+	OR region_id = 2;
+
+
+SELECT * FROM countries 
+	WHERE 
+	EXISTS (SELECT * FROM countries
+	WHERE country_name NOT LIKE '_r%'
+	OR region_id = 2);
+
+SELECT * FROM employees 
+	WHERE phone_number IS NOT null; 
+
+SELECT * FROM employees 
+	WHERE phone_number IS null; 
+
+
+/*
+ORDER BY (ACS, DESC)
+DISTINCT
+*/
+
+SELECT first_name, salary FROM employees 
+	ORDER BY first_name, salary;
+
+SELECT first_name, salary FROM employees 
+	ORDER BY  salary, first_name;
+
+SELECT first_name, salary FROM employees 
+	ORDER BY  salary ASC;
+
+SELECT first_name, salary FROM employees 
+	ORDER BY  salary DESC;	
+
+SELECT DISTINCT  salary FROM employees 
+	ORDER BY  salary DESC;	
